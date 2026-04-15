@@ -29,7 +29,7 @@ export function Home() {
 	);
 }
 
-function Resource(props) {
+function Resource(props: { href: string; title: string; description: string }) {
 	return (
 		<a href={props.href} target="_blank" class="resource">
 			<h2>{props.title}</h2>

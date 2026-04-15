@@ -2,7 +2,8 @@ import { LocationProvider, Router, Route, hydrate, prerender as ssr } from 'prea
 
 import { Header } from './components/Header.jsx';
 import { Home } from './pages/Home/index.jsx';
-import { NotFound } from './pages/_404.jsx';
+import { About } from './pages/About/index.js'
+import { NotFound } from './pages/_404/_404.jsx';
 import './style.css';
 
 export function App() {
@@ -12,6 +13,7 @@ export function App() {
 			<main>
 				<Router>
 					<Route path="/" component={Home} />
+					<Route path="/about" component={About} />
 					<Route default component={NotFound} />
 				</Router>
 			</main>
@@ -20,9 +22,9 @@ export function App() {
 }
 
 if (typeof window !== 'undefined') {
-	hydrate(<App />, document.getElementById('app'));
+	hydrate(<App />, document.getElementById('app')!);
 }
 
-export async function prerender(data) {
+export async function prerender(data: Record<string, unknown>) {
 	return await ssr(<App {...data} />);
 }

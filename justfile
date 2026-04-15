@@ -13,10 +13,6 @@ build:
 preview: build
     pnpm preview
 
-# Cloudflare Pages へデプロイ（プロジェクト名を引数で指定）
-deploy project_name="my-site": build
-    pnpm wrangler pages deploy dist --project-name {{project_name}}
-
 # 依存パッケージインストール
 install:
     pnpm install

@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Commands
 
 ```bash
@@ -25,3 +21,6 @@ tech: テック系記事
 notes: テック以外の雑多記事
 
 ブレイクポイント: 768px
+
+成果物
+https://my-site.maya0513.workers.dev/

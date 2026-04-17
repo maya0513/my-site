@@ -16,7 +16,7 @@ export function ThemeToggle({ theme, onToggle }: Props) {
 			title={label}
 			aria-label={label}
 		>
-			<span class="inline-block w-[1em] text-center" aria-hidden="true">{icon}</span>
+			<span class="inline-flex items-center justify-center w-[1em]" aria-hidden="true">{icon}</span>
 		</button>
 	);
 }

@@ -1,175 +1,57 @@
-/* ── CSS カスタムプロパティ（ライトテーマ デフォルト） ── */
-:root {
-	--color: #222;
-	--color-muted: #555;
-	--bg: #ffffff;
-	--header-bg: #40b83a;
-	--header-color: #fff;
+@import "tailwindcss";
+
+/* data-theme="dark" 属性ベースのダークモードバリアント */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* テーマカラーをCSSカスタムプロパティで定義 */
+@layer base {
+  :root {
+    --fg: #222;
+    --fg-muted: #555;
+    --bg: #ffffff;
+  }
+
+  [data-theme="dark"] {
+    --fg: #ccc;
+    --fg-muted: #999;
+    --bg: #1a1a1a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --fg: #ccc;
+      --fg-muted: #999;
+      --bg: #1a1a1a;
+    }
+  }
+
+  html {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--fg);
+    background: var(--bg);
+  }
+
+  body {
+    margin: 0;
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 }
 
-/* ダークテーマ（明示指定） */
-[data-theme="dark"] {
-	--color: #ccc;
-	--color-muted: #999;
-	--bg: #1a1a1a;
-}
-
-/* システム設定がダークのとき（data-theme 未指定時のみ） */
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme]) {
-		--color: #ccc;
-		--color-muted: #999;
-		--bg: #1a1a1a;
-	}
-}
-
-/* ── ベーススタイル ── */
-:root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
-	color: var(--color);
-	background-color: var(--bg);
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
-}
-
-body {
-	margin: 0;
-}
-
-#app {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-}
-
-/* ── ヘッダー ── */
-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	background-color: var(--header-bg);
-	padding: 0 0.5rem;
-}
-
-header nav {
-	display: flex;
-}
-
-header a {
-	color: var(--header-color);
-	padding: 0.75rem;
-	text-decoration: none;
-}
-
-header a.active {
-	background-color: #0005;
-}
-
-header a:hover {
-	background-color: #0008;
-}
-
-/* ── テーマ切り替えドロップダウン ── */
-.theme-toggle {
-	position: relative;
-	margin: 0 0.5rem;
-}
-
-.theme-toggle__trigger {
-	display: flex;
-	align-items: center;
-	gap: 5px;
-	background: #0003;
-	border: 1px solid #fff3;
-	border-radius: 6px;
-	color: var(--header-color);
-	cursor: pointer;
-	font-size: 0.8rem;
-	padding: 4px 9px;
-	transition: background 0.15s;
-}
-
-.theme-toggle__trigger:hover {
-	background: #0005;
-}
-
-.theme-toggle__label {
-	font-size: 0.78rem;
-	letter-spacing: 0.02em;
-}
-
-.theme-toggle__caret {
-	font-size: 0.65rem;
-	opacity: 0.8;
-	transition: transform 0.15s;
-	display: inline-block;
-}
-
-.theme-toggle__caret--open {
-	transform: rotate(180deg);
-}
-
-.theme-toggle__menu {
-	position: absolute;
-	right: 0;
-	top: calc(100% + 6px);
-	background: var(--bg);
-	border: 1px solid #8884;
-	border-radius: 8px;
-	box-shadow: 0 4px 16px #0002;
-	list-style: none;
-	margin: 0;
-	min-width: 120px;
-	overflow: hidden;
-	padding: 4px;
-	z-index: 100;
-}
-
-.theme-toggle__option {
-	align-items: center;
-	border-radius: 5px;
-	color: var(--color);
-	cursor: pointer;
-	display: flex;
-	font-size: 0.82rem;
-	gap: 8px;
-	padding: 7px 10px;
-	transition: background 0.12s;
-}
-
-.theme-toggle__option:hover {
-	background: #8881;
-}
-
-.theme-toggle__option--selected {
-	background: #8882;
-	font-weight: 600;
-}
-
-/* モバイルではラベルを非表示 */
-@media (max-width: 479px) {
-	.theme-toggle__label {
-		display: none;
-	}
-}
-
-/* ── メインコンテンツ ── */
-main {
-	flex: auto;
-	display: flex;
-	align-items: center;
-	max-width: 1280px;
-	margin: 0 auto;
-	text-align: center;
-}
-
-@media (max-width: 639px) {
-	main {
-		margin: 2rem;
-	}
+/* Tailwindユーティリティで使えるカラートークン（inline = CSS変数を直接参照） */
+@theme inline {
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-surface: var(--bg);
 }

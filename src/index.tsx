@@ -12,7 +12,7 @@ export function App() {
 	return (
 		<LocationProvider>
 			<Header />
-			<main>
+			<main class="flex-auto w-full max-w-[680px] mx-auto px-5 py-14">
 				<Router>
 					<Route path="/" component={Home} />
 					<Route path="/about" component={About} />

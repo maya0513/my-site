@@ -1,0 +1,96 @@
+<h2 class="sr-only">グリッド・カード型のブログデザインモックアップ</h2>
+
+<div style="padding: 1.5rem 1.25rem;">
+
+  <!-- ヘッダー -->
+  <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 28px; height: 28px; border-radius: var(--border-radius-md); background: var(--color-text-primary);"></div>
+      <p style="font-size: 17px; font-weight: 500; margin: 0;">Signal</p>
+    </div>
+    <div style="display: flex; gap: 20px; font-size: 13px; color: var(--color-text-secondary);">
+      <span>Tech</span>
+      <span>Design</span>
+      <span>Culture</span>
+      <span>Work</span>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <div style="padding: 6px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 12px;">Search</div>
+      <div style="padding: 6px 14px; background: var(--color-text-primary); color: var(--color-background-primary); border-radius: var(--border-radius-md); font-size: 12px;">Subscribe</div>
+    </div>
+  </div>
+
+  <!-- カテゴリタブ -->
+  <div style="display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap;">
+    <span style="padding: 6px 14px; background: var(--color-text-primary); color: var(--color-background-primary); border-radius: 999px; font-size: 12px;">All</span>
+    <span style="padding: 6px 14px; border: 0.5px solid var(--color-border-tertiary); border-radius: 999px; font-size: 12px; color: var(--color-text-secondary);">Latest</span>
+    <span style="padding: 6px 14px; border: 0.5px solid var(--color-border-tertiary); border-radius: 999px; font-size: 12px; color: var(--color-text-secondary);">Popular</span>
+    <span style="padding: 6px 14px; border: 0.5px solid var(--color-border-tertiary); border-radius: 999px; font-size: 12px; color: var(--color-text-secondary);">Featured</span>
+  </div>
+
+  <!-- カードグリッド -->
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;">
+
+    <!-- カード 1 -->
+    <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden;">
+      <div style="height: 120px; background: #AFA9EC;"></div>
+      <div style="padding: 14px;">
+        <p style="font-size: 11px; color: #534AB7; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; font-weight: 500;">Design</p>
+        <p style="font-size: 14px; font-weight: 500; line-height: 1.4; margin: 0 0 10px;">タイポグラフィの呼吸を整える</p>
+        <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 0;">6 min · Apr 16</p>
+      </div>
+    </div>
+
+    <!-- カード 2 -->
+    <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden;">
+      <div style="height: 120px; background: #5DCAA5;"></div>
+      <div style="padding: 14px;">
+        <p style="font-size: 11px; color: #0F6E56; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; font-weight: 500;">Tech</p>
+        <p style="font-size: 14px; font-weight: 500; line-height: 1.4; margin: 0 0 10px;">Rustで書く小さなCLIツール</p>
+        <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 0;">12 min · Apr 14</p>
+      </div>
+    </div>
+
+    <!-- カード 3 -->
+    <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden;">
+      <div style="height: 120px; background: #F0997B;"></div>
+      <div style="padding: 14px;">
+        <p style="font-size: 11px; color: #993C1D; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; font-weight: 500;">Culture</p>
+        <p style="font-size: 14px; font-weight: 500; line-height: 1.4; margin: 0 0 10px;">日曜の映画館という儀式</p>
+        <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 0;">4 min · Apr 12</p>
+      </div>
+    </div>
+
+    <!-- カード 4 -->
+    <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden;">
+      <div style="height: 120px; background: #FAC775;"></div>
+      <div style="padding: 14px;">
+        <p style="font-size: 11px; color: #854F0B; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; font-weight: 500;">Work</p>
+        <p style="font-size: 14px; font-weight: 500; line-height: 1.4; margin: 0 0 10px;">小さなチームの意思決定</p>
+        <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 0;">8 min · Apr 10</p>
+      </div>
+    </div>
+
+    <!-- カード 5 -->
+    <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden;">
+      <div style="height: 120px; background: #ED93B1;"></div>
+      <div style="padding: 14px;">
+        <p style="font-size: 11px; color: #993556; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; font-weight: 500;">Design</p>
+        <p style="font-size: 14px; font-weight: 500; line-height: 1.4; margin: 0 0 10px;">余白という選択肢</p>
+        <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 0;">5 min · Apr 8</p>
+      </div>
+    </div>
+
+    <!-- カード 6 -->
+    <div style="background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden;">
+      <div style="height: 120px; background: #85B7EB;"></div>
+      <div style="padding: 14px;">
+        <p style="font-size: 11px; color: #185FA5; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; font-weight: 500;">Tech</p>
+        <p style="font-size: 14px; font-weight: 500; line-height: 1.4; margin: 0 0 10px;">React Server Componentsの実際</p>
+        <p style="font-size: 12px; color: var(--color-text-tertiary); margin: 0;">10 min · Apr 6</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleList from '../../components/ArticleList.astro';
+import { getArticles } from '../../lib/articles';
+
+const articles = await getArticles('notes');
+---
+
+<BaseLayout title="notes | maya0513">
+	<div class="space-y-8">
+		<section>
+			<h1 class="text-2xl font-semibold tracking-tight mb-2">notes</h1>
+			<p class="text-sm text-fg-muted leading-[1.75]">日常・読書・雑感などテック以外のこと</p>
+		</section>
+		<ArticleList articles={articles} showTags />
+	</div>
+</BaseLayout>

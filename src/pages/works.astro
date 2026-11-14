@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { works } from '../data/works';
+
+const featured = works.filter((work) => work.featured);
+const others = works.filter((work) => !work.featured);
+---
+
+<BaseLayout title="works | maya0513">
+	<div class="space-y-12">
+		<section>
+			<h1 class="text-2xl font-semibold tracking-tight mb-2">works</h1>
+			<p class="text-sm text-fg-muted leading-[1.75]">作ったものへのリンク集</p>
+		</section>
+
+		{works.length === 0 ? (
+			<p class="text-sm text-fg-muted">まだ何もありません。</p>
+		) : (
+			<>
+				{featured.length > 0 && (
+					<section class="space-y-4">
+						{featured.map((work) => (
+							<a href={work.url} target="_blank" rel="noopener noreferrer" class="block rounded-xl border border-fg/10 px-5 py-4 hover:border-fg/25 transition-colors">
+								<div class="flex items-center justify-between mb-1.5">
+									<span class="text-sm font-medium">{work.title}</span>
+									<span class="text-fg-muted text-sm">↗</span>
+								</div>
+								<p class="text-sm text-fg-muted leading-[1.75]">{work.longDescription ?? work.description}</p>
+							</a>
+						))}
+					</section>
+				)}
+				{others.length > 0 && (
+					<section>
+						<ul>
+							{others.map((work) => (
+								<li>
+									<a href={work.url} target="_blank" rel="noopener noreferrer" class="block py-3 border-b border-fg/8 group">
+										<div class="flex items-baseline justify-between gap-4">
+											<span class="text-sm group-hover:underline underline-offset-2">{work.title}</span>
+											<span class="text-fg-muted text-sm shrink-0">↗</span>
+										</div>
+										<p class="text-[13px] text-fg-muted leading-[1.6] mt-1">{work.description}</p>
+									</a>
+								</li>
+							))}
+						</ul>
+					</section>
+				)}
+			</>
+		)}
+	</div>
+</BaseLayout>

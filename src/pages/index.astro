@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { articlePath, formatDate, getLatestArticles } from '../lib/articles';
 
-const recentPosts = [
-	{ href: '/tech', date: '2026-04-15', title: 'Preact Signals と状態設計' },
-	{ href: '/tech', date: '2026-04-10', title: 'Tailwind CSS v4 に乗り換えた' },
-	{ href: '/notes', date: '2026-04-05', title: '週末に読んだ本まとめ' },
+const recentPosts = await getLatestArticles(5);
+
+const externalLinks = [
+	{ href: 'https://github.com/maya0513', label: 'GitHub' },
 ];
 ---
 
@@ -36,17 +37,41 @@ const recentPosts = [
 					</div>
 					<p class="text-fg-muted text-sm leading-[1.6]">日常・読書・雑感などテック以外のこと</p>
 				</a>
+				<a href="/works" class="group block rounded-xl border border-fg/10 px-4 py-3.5 hover:border-fg/25 transition-colors">
+					<div class="flex items-center justify-between mb-1.5">
+						<span class="text-sm font-medium">works</span>
+						<span class="text-fg-muted text-sm group-hover:translate-x-0.5 transition-transform">→</span>
+					</div>
+					<p class="text-fg-muted text-sm leading-[1.6]">作ったものへのリンク集</p>
+				</a>
 			</div>
 		</section>
 
 		<section class="space-y-3">
 			<h2 class="text-[11px] font-medium text-fg-muted uppercase tracking-widest">recent</h2>
-			<ul class="space-y-0">
-				{recentPosts.map(({ href, date, title }) => (
+			{recentPosts.length === 0 ? (
+				<p class="text-sm text-fg-muted">まだ記事がありません。</p>
+			) : (
+				<ul class="space-y-0">
+					{recentPosts.map((article) => (
+						<li>
+							<a href={articlePath(article)} class="flex items-baseline justify-between gap-4 py-2.5 border-b border-fg/8 hover:text-fg-muted transition-colors group">
+								<span class="text-sm group-hover:underline underline-offset-2">{article.data.title}</span>
+								<time datetime={formatDate(article.data.date)} class="text-[12px] text-fg-muted shrink-0 tabular-nums">{formatDate(article.data.date)}</time>
+							</a>
+						</li>
+					))}
+				</ul>
+			)}
+		</section>
+
+		<section class="space-y-3">
+			<h2 class="text-[11px] font-medium text-fg-muted uppercase tracking-widest">links</h2>
+			<ul class="space-y-2">
+				{externalLinks.map(({ href, label }) => (
 					<li>
-						<a href={href} class="flex items-baseline justify-between gap-4 py-2.5 border-b border-fg/8 hover:text-fg-muted transition-colors group">
-							<span class="text-sm group-hover:underline underline-offset-2">{title}</span>
-							<time datetime={date} class="text-[12px] text-fg-muted shrink-0 tabular-nums">{date}</time>
+						<a href={href} target="_blank" rel="noopener noreferrer" class="text-sm text-fg-muted hover:text-fg transition-colors hover:underline underline-offset-2">
+							{label} ↗
 						</a>
 					</li>
 				))}

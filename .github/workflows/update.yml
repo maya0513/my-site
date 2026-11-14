@@ -1,0 +1,68 @@
+name: Update dependency artifacts
+
+on:
+  push:
+    branches: ["renovate/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    name: Prepare dependency artifacts
+    if: github.event_name == 'push' && github.event.sender.id == 29139614 && startsWith(github.ref, 'refs/heads/renovate/')
+    concurrency:
+      group: dependency-artifacts-${{ github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      MISE_SAFE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5
+        with:
+          version: "2026.10.25"
+          minimum_release_age: "0s"
+          install: false
+          cache: false
+          experimental: true
+
+      - id: mise
+        uses: maya0513/renovate-config/.github/actions/mise-pnpm@04fc6675a367b395b9eb3e087fcf64632b19eea0 # main
+        with:
+          verify-only: "false"
+          lock-groups: >-
+            [{"lockfile":"mise.lock","tools":["node","pnpm"],"platforms":["linux-x64","linux-arm64","macos-arm64","windows-x64"],"verify":"regenerate"}]
+
+      - id: viteplus
+        uses: maya0513/renovate-config/.github/actions/pnpm-viteplus@04fc6675a367b395b9eb3e087fcf64632b19eea0 # main
+        with:
+          preparation-state: ${{ steps.mise.outputs.state }}
+
+      - id: outputs
+        uses: maya0513/renovate-config/.github/actions/pnpm-outputs@04fc6675a367b395b9eb3e087fcf64632b19eea0 # main
+        with:
+          mise-state: ${{ steps.mise.outputs.state }}
+          viteplus-state: ${{ steps.viteplus.outputs.state }}
+
+    outputs:
+      base: ${{ steps.outputs.outputs.base }}
+      changed: ${{ steps.outputs.outputs.changed }}
+      artifact-id: ${{ steps.outputs.outputs.artifact-id }}
+
+  publish:
+    needs: prepare
+    uses: maya0513/renovate-config/.github/workflows/publish-pnpm-artifacts.yml@04fc6675a367b395b9eb3e087fcf64632b19eea0 # main
+    with:
+      base: ${{ needs.prepare.outputs.base }}
+      changed: ${{ needs.prepare.outputs.changed }}
+      artifact-id: ${{ needs.prepare.outputs.artifact-id }}
+      mise: true
+      viteplus: true
+      app-client-id: ${{ vars.DEPENDENCY_ARTIFACTS_APP_CLIENT_ID }}
+    secrets:
+      app-private-key: ${{ secrets.DEPENDENCY_ARTIFACTS_APP_PRIVATE_KEY }}

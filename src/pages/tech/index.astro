@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleList from '../../components/ArticleList.astro';
+import { getArticles } from '../../lib/articles';
+
+const articles = await getArticles('tech');
+---
+
+<BaseLayout title="tech | maya0513">
+	<div class="space-y-8">
+		<section>
+			<h1 class="text-2xl font-semibold tracking-tight mb-2">tech</h1>
+			<p class="text-sm text-fg-muted leading-[1.75]">TypeScript・関数型・開発環境などテック系の記事</p>
+		</section>
+		<ArticleList articles={articles} />
+	</div>
+</BaseLayout>

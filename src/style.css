@@ -52,3 +52,90 @@
   --color-fg-muted: var(--fg-muted);
   --color-surface: var(--bg);
 }
+
+/* 記事本文（Markdownレンダリング結果）のスタイル */
+@layer components {
+  .article-body {
+    font-size: 0.875rem;
+    line-height: 1.85;
+  }
+
+  .article-body p {
+    margin: 0 0 1.25em;
+  }
+
+  .article-body h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 2em 0 0.75em;
+  }
+
+  .article-body h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.75em 0 0.5em;
+  }
+
+  .article-body ul,
+  .article-body ol {
+    margin: 0 0 1.25em;
+    padding-left: 1.5em;
+  }
+
+  .article-body ul {
+    list-style: disc;
+  }
+
+  .article-body ol {
+    list-style: decimal;
+  }
+
+  .article-body li {
+    margin: 0.25em 0;
+  }
+
+  .article-body a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .article-body code {
+    font-size: 0.85em;
+    background: color-mix(in srgb, currentColor 8%, transparent);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+
+  .article-body pre {
+    margin: 0 0 1.25em;
+    padding: 1em;
+    border-radius: 8px;
+    overflow-x: auto;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+  }
+
+  .article-body pre code {
+    background: transparent;
+    padding: 0;
+  }
+
+  .article-body blockquote {
+    margin: 0 0 1.25em;
+    padding-left: 1em;
+    border-left: 2px solid color-mix(in srgb, currentColor 20%, transparent);
+    color: var(--fg-muted);
+  }
+
+  .article-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .article-body hr {
+    margin: 2em 0;
+    border: none;
+    border-top: 0.5px solid color-mix(in srgb, currentColor 15%, transparent);
+  }
+}

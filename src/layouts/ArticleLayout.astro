@@ -1,0 +1,36 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate } from '../lib/articles';
+
+interface Props {
+	title: string;
+	date: Date;
+	tags: string[];
+	backHref: string;
+	backLabel: string;
+}
+
+const { title, date, tags, backHref, backLabel } = Astro.props;
+---
+
+<BaseLayout title={`${title} | maya0513`}>
+	<article>
+		<header class="mb-10">
+			<a href={backHref} class="text-[13px] text-fg-muted hover:text-fg transition-colors">← {backLabel}</a>
+			<h1 class="text-2xl font-semibold tracking-tight mt-4 mb-2">{title}</h1>
+			<div class="flex flex-wrap items-center gap-3 text-[13px] text-fg-muted">
+				<time datetime={formatDate(date)}>{formatDate(date)}</time>
+				{tags.length > 0 && (
+					<ul class="flex flex-wrap gap-1.5">
+						{tags.map((tag) => (
+							<li class="text-xs px-2 py-0.5 rounded-full border border-fg/15">{tag}</li>
+						))}
+					</ul>
+				)}
+			</div>
+		</header>
+		<div class="article-body">
+			<slot />
+		</div>
+	</article>
+</BaseLayout>

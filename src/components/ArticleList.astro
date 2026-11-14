@@ -1,0 +1,37 @@
+---
+import { articlePath, formatDate, type Article } from '../lib/articles';
+
+interface Props {
+	articles: Article[];
+	showTags?: boolean;
+}
+
+const { articles, showTags = false } = Astro.props;
+---
+
+{articles.length === 0 ? (
+	<p class="text-sm text-fg-muted">まだ記事がありません。</p>
+) : (
+	<ul>
+		{articles.map((article) => (
+			<li>
+				<a href={articlePath(article)} class="block py-3 border-b border-fg/8 group">
+					<div class="flex items-baseline justify-between gap-4">
+						<span class="text-sm group-hover:underline underline-offset-2">{article.data.title}</span>
+						<time datetime={formatDate(article.data.date)} class="text-[12px] text-fg-muted shrink-0 tabular-nums">{formatDate(article.data.date)}</time>
+					</div>
+					{article.data.description && (
+						<p class="text-[13px] text-fg-muted leading-[1.6] mt-1">{article.data.description}</p>
+					)}
+					{showTags && article.data.tags.length > 0 && (
+						<ul class="flex flex-wrap gap-1.5 mt-2">
+							{article.data.tags.map((tag) => (
+								<li class="text-xs px-2 py-0.5 rounded-full border border-fg/15 text-fg-muted">{tag}</li>
+							))}
+						</ul>
+					)}
+				</a>
+			</li>
+		))}
+	</ul>
+)}

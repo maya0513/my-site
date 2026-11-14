@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dependency-artifacts:
+    name: dependency-artifacts / prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      MISE_SAFE: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5
+        with:
+          version: "2026.10.25"
+          minimum_release_age: "0s"
+          install: false
+          cache: false
+          experimental: true
+
+      - id: mise
+        uses: maya0513/renovate-config/.github/actions/mise-pnpm@04fc6675a367b395b9eb3e087fcf64632b19eea0 # main
+        with:
+          verify-only: "true"
+          lock-groups: >-
+            [{"lockfile":"mise.lock","tools":["node","pnpm"],"platforms":["linux-x64","linux-arm64","macos-arm64","windows-x64"],"verify":"regenerate"}]
+
+      - id: viteplus
+        uses: maya0513/renovate-config/.github/actions/pnpm-viteplus@04fc6675a367b395b9eb3e087fcf64632b19eea0 # main
+        with:
+          preparation-state: ${{ steps.mise.outputs.state }}
+
+      - id: outputs
+        uses: maya0513/renovate-config/.github/actions/pnpm-outputs@04fc6675a367b395b9eb3e087fcf64632b19eea0 # main
+        with:
+          mise-state: ${{ steps.mise.outputs.state }}
+          viteplus-state: ${{ steps.viteplus.outputs.state }}
+
+  check:
+    name: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca # v5
+        with:
+          version: "2026.10.25"
+          minimum_release_age: "0s"
+          install: false
+          cache: false
+          experimental: true
+
+      - name: Install locked tools
+        run: mise install --locked
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm exec astro check
+
+      - name: Build
+        run: pnpm exec cf build
+
+  required:
+    name: required
+    if: ${{ always() }}
+    needs: [dependency-artifacts, check]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Require every CI group to pass
+        shell: bash
+        env:
+          ARTIFACTS_RESULT: ${{ needs.dependency-artifacts.result }}
+          CHECK_RESULT: ${{ needs.check.result }}
+        run: |
+          for result in "$ARTIFACTS_RESULT" "$CHECK_RESULT"; do
+            if [[ "$result" != "success" ]]; then
+              echo "A required CI group finished with: $result" >&2
+              exit 1
+            fi
+          done

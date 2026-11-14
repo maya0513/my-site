@@ -1,6 +1,6 @@
 # 個人サイト
 
-AstroでSSGした個人サイトです。生成ページと静的ファイルはCloudflare Assetsから配信し、Hono Workerは将来の `/api/*` 用に同じCloudflare Workerへ配置します。Node.jsとpnpmのバージョンはmise.tomlでlatestを指定しています。
+AstroでSSGした個人サイトです。@astrojs/cloudflare アダプタでビルドし、生成ページと静的ファイルはCloudflare Assetsから配信します。デプロイはcf CLIを使います。将来の `/api/*` はAstroのエンドポイントとして追加する想定です。Node.jsとpnpmのバージョンはmise.tomlでNode.jsにlts、pnpmにlatestを指定しています。
 
 ## 開発
 

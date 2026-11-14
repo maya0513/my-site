@@ -18,10 +18,10 @@ check:
 build:
     pnpm exec vp run build
 
-# Cloudflare Workersローカルプレビュー
+# cfでCloudflare Workersローカルプレビュー
 preview:
     pnpm exec vp run preview
 
-# Cloudflare Workersへデプロイ
+# cfでCloudflare Workersへデプロイ
 deploy:
     pnpm exec vp run deploy

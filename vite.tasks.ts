@@ -7,17 +7,15 @@ export const tasks = {
 		command: 'astro check',
 	},
 	build: {
-		command: 'astro build',
+		command: 'cf build',
 		dependsOn: ['check'],
 	},
 	preview: {
-		command: 'wrangler dev --config wrangler.jsonc',
-		dependsOn: ['build'],
+		command: 'cf dev',
 		cache: false,
 	},
 	deploy: {
-		command: 'wrangler deploy --config wrangler.jsonc',
-		dependsOn: ['build'],
+		command: 'cf deploy',
 		cache: false,
 	},
 };

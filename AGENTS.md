@@ -13,7 +13,7 @@ just deploy      # Cloudflare Workersへデプロイ
 ## スタック
 - TypeScript
 - Astro
-- Hono on Cloudflare Workers
+- Cloudflare Workers（@astrojs/cloudflare アダプタ + cf CLI）
 - Tailwind CSS v4
 - Vite+
 - pnpm（mise管理）

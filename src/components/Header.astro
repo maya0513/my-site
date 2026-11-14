@@ -1,0 +1,82 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+	currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const navLink = (path: string) => [
+	'text-[13px] rounded-md px-2.5 py-[5px] no-underline transition-colors',
+	currentPath === path
+		? 'text-fg bg-black/8 dark:bg-white/8'
+		: 'text-fg-muted hover:text-fg hover:bg-black/6 dark:hover:bg-white/6',
+].join(' ');
+---
+
+<header class="flex flex-col md:flex-row md:items-center md:justify-between px-5 border-b border-b-[0.5px] border-fg/15">
+	<div class="flex items-center justify-between h-[52px]">
+		<div class="flex items-center gap-2.5">
+			<div class="w-[20px] h-[20px] rounded-[4px] bg-fg shrink-0"></div>
+			<span class="text-[14px] font-medium tracking-tight">maya0513</span>
+		</div>
+		<div class="md:hidden">
+			<ThemeToggle />
+		</div>
+	</div>
+	<nav class="flex gap-0.5 pb-2.5 md:pb-0" aria-label="Main navigation">
+		<a href="/" class={navLink('/')}>home</a>
+		<a href="/about" class={navLink('/about')}>about</a>
+		<a href="/tech" class={navLink('/tech')}>tech</a>
+		<a href="/notes" class={navLink('/notes')}>notes</a>
+	</nav>
+	<div class="hidden md:block">
+		<ThemeToggle />
+	</div>
+</header>
+
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+	const readStoredTheme = (): 'light' | 'dark' | null => {
+		try {
+			const theme = localStorage.getItem('theme');
+			return theme === 'light' || theme === 'dark' ? theme : null;
+		} catch {
+			return null;
+		}
+	};
+	const saveTheme = (theme: 'light' | 'dark') => {
+		try {
+			localStorage.setItem('theme', theme);
+		} catch {}
+	};
+
+	const updateButtons = (theme: 'light' | 'dark') => {
+		const label = theme === 'dark'
+			? 'ダークモード（クリックで切り替え）'
+			: 'ライトモード（クリックで切り替え）';
+		for (const button of buttons) {
+			button.setAttribute('aria-label', label);
+			button.setAttribute('title', label);
+			const icon = button.querySelector<HTMLElement>('[data-theme-icon]');
+			if (icon) icon.textContent = theme === 'dark' ? '☾' : '☀';
+		}
+	};
+
+	for (const button of buttons) {
+		button.addEventListener('click', () => {
+			const current = document.documentElement.dataset.theme
+				|| (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+			const next = current === 'dark' ? 'light' : 'dark';
+			document.documentElement.dataset.theme = next;
+			saveTheme(next);
+			updateButtons(next);
+		});
+	}
+
+	const documentTheme = document.documentElement.dataset.theme;
+	const initialTheme: 'light' | 'dark' = documentTheme === 'light' || documentTheme === 'dark'
+		? documentTheme
+		: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+	updateButtons(readStoredTheme() ?? initialTheme);
+</script>

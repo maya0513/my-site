@@ -1,0 +1,39 @@
+---
+import Header from '../components/Header.astro';
+import '../style.css';
+
+interface Props {
+	title?: string;
+}
+
+const { title = 'maya0513' } = Astro.props;
+const pathname = Astro.url.pathname;
+const currentPath = pathname.length > 1 && pathname.endsWith('/')
+	? pathname.slice(0, -1)
+	: pathname;
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/jpeg" href="/IMG_5534.JPG" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="color-scheme" content="light dark" />
+		<title>{title}</title>
+		<script is:inline>
+			try {
+				const theme = localStorage.getItem('theme');
+				if (theme === 'light' || theme === 'dark') {
+					document.documentElement.setAttribute('data-theme', theme);
+				}
+			} catch {}
+		</script>
+	</head>
+	<body>
+		<Header currentPath={currentPath} />
+		<main class="flex-auto w-full max-w-[680px] mx-auto px-5 py-14">
+			<slot />
+		</main>
+	</body>
+</html>

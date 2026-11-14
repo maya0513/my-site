@@ -1,32 +1,14 @@
 {
   "private": true,
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "pnpm run build && wrangler dev",
-    "deploy": "pnpm run build && wrangler deploy"
-  },
-  "dependencies": {
-    "marked": "^18.0.0",
-    "preact": "^10.26.9",
-    "preact-iso": "^2.11.1",
-    "preact-render-to-string": "^6.6.7"
-  },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.32.2",
-    "@preact/preset-vite": "^2.10.2",
-    "@tailwindcss/vite": "^4.2.2",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^6.0.2",
-    "vite": "^7.0.4",
-    "wrangler": "^4.82.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "sharp",
-      "workerd"
-    ]
+    "@astrojs/check": "^0.9.10",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.4",
+    "hono": "^4.13.8",
+    "tailwindcss": "^4.3.3",
+    "typescript": "6.0.3",
+    "vite-plus": "1.0.0-rc.0",
+    "wrangler": "^4.137.0"
   }
 }
